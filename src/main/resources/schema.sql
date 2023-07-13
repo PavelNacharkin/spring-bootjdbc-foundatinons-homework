@@ -1,14 +1,6 @@
-CREATE TABLE farm(
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(256),
-    email VARCHAR(256),
-    animal VARCHAR(256),
-    user_id BIGINT
-);
+DROP TABLE IF EXISTS users;
 CREATE TABLE users(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
  name VARCHAR(256),
- age VARCHAR(256),
- farm_id BIGINT,
- FOREIGN KEY(farm_id) REFERENCES farm(id)
-)
+ age VARCHAR(256)
+);
