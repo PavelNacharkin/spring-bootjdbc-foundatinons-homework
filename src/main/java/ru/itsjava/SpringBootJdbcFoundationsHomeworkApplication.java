@@ -11,10 +11,10 @@ import ru.itsjava.domain.User;
 import java.sql.SQLException;
 
 @SpringBootApplication
-public class SpringBootjdbcFoundatinonsHomeworkApplication {
+public class SpringBootJdbcFoundationsHomeworkApplication {
 
     public static void main(String[] args) throws SQLException {
-        ApplicationContext context = SpringApplication.run(SpringBootjdbcFoundatinonsHomeworkApplication.class, args);
+        ApplicationContext context = SpringApplication.run(SpringBootJdbcFoundationsHomeworkApplication.class, args);
 
 
         UserDao userDao = context.getBean(UserDao.class);
@@ -27,6 +27,8 @@ public class SpringBootjdbcFoundatinonsHomeworkApplication {
         User updateUser = new User("Georg", 18);
         updateUser.setId(2L);
         userDao.updateUser(updateUser);
+
+        System.out.println("userDao.findById(2L) = " + userDao.findById(2L));
 
         userDao.delete(updateUser);
         System.out.println("userDao.count() = " + userDao.count());
