@@ -4,9 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.EmptyResultDataAccessException;
 import ru.itsjava.domain.User;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @JdbcTest
 @Import(UserDaoImpl.class)
@@ -50,11 +52,19 @@ public class UserJdbcDaoImplTest {
 
     @Test
     public void shouldHaveCorrectDelete() {
-        User deleteUser = userDao.findById(FIRST_ID);
-        userDao.delete(deleteUser);
+        User addedUser = new User(NEW_ID, DEFAULT_NAME, DEFAULT_AGE);
+        userDao.insert(addedUser);
 
-        assertEquals(userDao.count(), 2);
+        assertEquals(userDao.findById(NEW_ID), addedUser);
 
+        userDao.delete(userDao.findById(NEW_ID));
+        int result = 1;
+        try {
+            assertEquals(0, userDao.findById(NEW_ID));
+        } catch (EmptyResultDataAccessException e) {
+            result = 0;
+        }
+        assertEquals(0, result);
     }
 
     @Test
@@ -62,6 +72,8 @@ public class UserJdbcDaoImplTest {
         User expectedUser = new User(NEW_ID, DEFAULT_NAME, DEFAULT_AGE);
         userDao.insert(expectedUser);
 
+
         assertEquals(userDao.findById(NEW_ID), expectedUser);
+
     }
 }

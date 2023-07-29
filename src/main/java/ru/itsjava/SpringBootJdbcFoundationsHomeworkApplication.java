@@ -14,8 +14,11 @@ import java.sql.SQLException;
 public class SpringBootJdbcFoundationsHomeworkApplication {
 
     public static void main(String[] args) throws SQLException {
+
         ApplicationContext context = SpringApplication.run(SpringBootJdbcFoundationsHomeworkApplication.class, args);
 
-        Console.main(args);
+//        Console.main(args);
+
+
     }
 }
