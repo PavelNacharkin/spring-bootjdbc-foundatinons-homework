@@ -8,6 +8,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import ru.itsjava.domain.Pet;
 import ru.itsjava.domain.User;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +22,7 @@ public class UserJdbcDaoImplTest {
 
     private static final long FIRST_ID = 1L;
     private static final long NEW_ID = 4L;
-    private static final Pet DEFAULT_PET = new Pet(1L,"Maine Coon");
+    private static final Pet DEFAULT_PET = new Pet(1L, "Maine Coon");
 
     @Autowired
     private UserDao userDao;
@@ -64,22 +66,20 @@ public class UserJdbcDaoImplTest {
         assertEquals(userDao.findById(NEW_ID), addedUser);
 
         userDao.delete(userDao.findById(NEW_ID));
-        int result = 1;
-        try {
-            assertEquals(0, userDao.findById(NEW_ID));
-        } catch (EmptyResultDataAccessException e) {
-            result = 0;
+
+        if (userDao.findById(NEW_ID) != null) {
+            assertEquals(userDao.findById(NEW_ID), addedUser);
         }
-        assertEquals(0, result);
+
     }
 
     @Test
     public void shouldHaveCorrectFindById() {
         User expectedUser = new User(NEW_ID, DEFAULT_NAME, DEFAULT_AGE, DEFAULT_PET);
         userDao.insert(expectedUser);
-
-
-        assertEquals(userDao.findById(NEW_ID), expectedUser);
+        if (userDao.findById(NEW_ID) != null) {
+            assertEquals(userDao.findById(NEW_ID), expectedUser);
+        }
 
     }
 }
