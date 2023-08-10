@@ -24,6 +24,7 @@ public class AppServiceImpl implements AppService {
             int menuNum = ioService.inputInt();
             if (menuNum == 1) {
                 printAllUsers();
+
             } else if (menuNum == 2) {
                 insertUser();
 
@@ -50,9 +51,7 @@ public class AppServiceImpl implements AppService {
         int age = ioService.inputInt();
 
         System.out.println("Выберите животное");
-//        System.out.println(petService.findAll().toString());
-        List<Pet> petList = petService.findAll();
-        System.out.println(petList.toString());
+        System.out.println(petService.findAll().toString());
         String breed = ioService.input();
         Pet petBreed = petService.findByBreed(breed);
 

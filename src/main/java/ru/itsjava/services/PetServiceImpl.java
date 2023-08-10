@@ -22,8 +22,4 @@ public class PetServiceImpl implements PetService {
         return petDao.findByBreed(breed);
     }
 
-    @Override
-    public String toString() {
-        return " " + petDao +" ";
-    }
 }

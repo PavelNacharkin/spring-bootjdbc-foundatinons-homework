@@ -1,13 +1,13 @@
 package ru.itsjava.services;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ru.itsjava.dao.UserDao;
 import ru.itsjava.domain.User;
 
 import java.util.List;
-
+@Data
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {

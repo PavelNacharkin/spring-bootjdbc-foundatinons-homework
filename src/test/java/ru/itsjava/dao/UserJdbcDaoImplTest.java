@@ -4,11 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
 import ru.itsjava.domain.Pet;
 import ru.itsjava.domain.User;
 
-import java.util.Optional;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -80,6 +79,14 @@ public class UserJdbcDaoImplTest {
         if (userDao.findById(NEW_ID) != null) {
             assertEquals(userDao.findById(NEW_ID), expectedUser);
         }
+
+    }
+
+    @Test
+    public void shouldHaveCorrectFindAll() {
+        List<User> userList = userDao.findAll();
+        assertEquals(userDao.count(), userList.size());
+
 
     }
 }
