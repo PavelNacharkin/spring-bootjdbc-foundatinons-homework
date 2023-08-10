@@ -17,7 +17,7 @@ public class SpringBootJdbcFoundationsHomeworkApplication {
     public static void main(String[] args) throws SQLException {
 
         ApplicationContext context = SpringApplication.run(SpringBootJdbcFoundationsHomeworkApplication.class, args);
-//        context.getBean(AppService.class).start();
+        context.getBean(AppService.class).start();
 
 
     }
