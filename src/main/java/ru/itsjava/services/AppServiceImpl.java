@@ -56,7 +56,11 @@ public class AppServiceImpl implements AppService {
         String breed = ioService.input();
         Optional<Pet> petBreed = petService.findByBreed(breed);
 
-        User user = new User(userName, age, petBreed.get());
-        userService.insert(user);
+        if (petBreed.isPresent()) {
+            User user = new User(userName, age, petBreed.get());
+            userService.insert(user);
+        } else {
+            System.out.println("Животное с указанной породой не найдено. Повторите попытку.");
+        }
     }
 }

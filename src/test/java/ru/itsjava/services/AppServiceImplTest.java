@@ -75,7 +75,6 @@ public class AppServiceImplTest {
         assertEquals("Введите Пользователя \r\n" +
                 "Введите Имя\r\n" +
                 "Введите возраст\r\n" +
-                "Выберите животное\r\n" + "[]\r\n", outputStream.toString());
+                "Выберите животное\r\n" + "[]\r\n"+ "Животное с указанной породой не найдено. Повторите попытку.\r\n", outputStream.toString());
     }
-
 }
