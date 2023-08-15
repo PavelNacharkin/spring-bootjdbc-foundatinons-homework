@@ -8,6 +8,7 @@ import ru.itsjava.domain.Pet;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,9 +21,9 @@ public class PetJdbcDaoImplTest {
 
     @Test
     public void shouldHaveCorrectFindByBreed() {
-        Pet pet = petDao.findByBreed("Maine Coon");
+        Optional<Pet> pet = petDao.findByBreed("Maine Coon");
 
-        assertEquals(pet.getBreed(), "Maine Coon");
+        assertEquals(pet.get().getBreed(), "Maine Coon");
 
     }
 

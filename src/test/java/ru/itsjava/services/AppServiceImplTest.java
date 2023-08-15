@@ -6,19 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import ru.itsjava.domain.Pet;
 import ru.itsjava.domain.User;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.List;
+import java.util.Optional;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 
-@Import(AppServiceImpl.class)
+
 @SpringBootTest
 public class AppServiceImplTest {
 
@@ -34,7 +35,7 @@ public class AppServiceImplTest {
         @Bean
         public PetService petService() {
             PetServiceImpl mockPetService = Mockito.mock(PetServiceImpl.class);
-            when(mockPetService.findByBreed("Maine Coon")).thenReturn(new Pet("Maine Coon"));
+            when(mockPetService.findByBreed("Maine Coon")).thenReturn(Optional.of(new Pet("Maine Coon")));
             return mockPetService;
         }
 

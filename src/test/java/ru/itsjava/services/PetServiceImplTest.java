@@ -11,9 +11,8 @@ import ru.itsjava.dao.PetDao;
 import ru.itsjava.dao.PetDaoImpl;
 import ru.itsjava.domain.Pet;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.List;
+import java.util.Optional;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,17 +26,17 @@ public class PetServiceImplTest {
     @Configuration
     static class MyConfiguration {
         @Bean
-        public PetDao petDao() {
-            PetDaoImpl mockPetService = Mockito.mock(PetDaoImpl.class);
-            when(mockPetService.findAll()).thenReturn(List.of(new Pet("Maine Coon")));
-            when(mockPetService.findByBreed("Maine Coon")).thenReturn(new Pet("Maine Coon"));
+        public PetDao petDaoInput() {
+            PetDao mockPetDao = Mockito.mock(PetDao.class);
+            when(mockPetDao.findAll()).thenReturn(List.of(new Pet("Maine Coon")));
+            when(mockPetDao.findByBreed("Maine Coon")).thenReturn(Optional.of(new Pet("Maine Coon")));
 
-            return mockPetService;
+            return mockPetDao;
         }
 
         @Bean
         PetService petService() {
-            return new PetServiceImpl(petDao());
+            return new PetServiceImpl(petDaoInput());
         }
     }
 
@@ -46,12 +45,10 @@ public class PetServiceImplTest {
 
     @Test
     void shouldHaveCorrectMethodFindByBreed() {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-        Pet pet = new Pet("Maine Coon");
-        petService.findByBreed("Maine Coon");
 
-        assertEquals("Maine Coon", outputStream.toString());
+        Optional<Pet> actualPet = petService.findByBreed("Maine Coon");
+
+        assertEquals("Maine Coon", actualPet.get().getBreed());
 
     }
 

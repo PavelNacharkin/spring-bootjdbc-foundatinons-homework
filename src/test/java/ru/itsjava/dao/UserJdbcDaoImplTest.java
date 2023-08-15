@@ -8,9 +8,9 @@ import ru.itsjava.domain.Pet;
 import ru.itsjava.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @JdbcTest
@@ -38,10 +38,10 @@ public class UserJdbcDaoImplTest {
         User expectedUser = new User(DEFAULT_NAME, DEFAULT_AGE, DEFAULT_PET);
 
         long idFromDB = userDao.insert(expectedUser);
-        User actualUser = userDao.findById(idFromDB);
+        Optional<User> actualUser = userDao.findById(idFromDB);
 
-        assertAll(() -> assertEquals(actualUser.getName(), expectedUser.getName()),
-                () -> assertEquals(actualUser.getAge(), expectedUser.getAge()));
+        assertAll(() -> assertEquals(actualUser.get().getName(), expectedUser.getName()),
+                () -> assertEquals(actualUser.get().getAge(), expectedUser.getAge()));
 
     }
 
@@ -50,9 +50,9 @@ public class UserJdbcDaoImplTest {
     public void shouldHaveCorrectUpdate() {
         User expectedUser = new User(FIRST_ID, DEFAULT_NAME, DEFAULT_AGE, DEFAULT_PET);
         userDao.update(expectedUser);
-        User actual = userDao.findById(FIRST_ID);
+        Optional<User> actualUser = userDao.findById(FIRST_ID);
 
-        assertEquals(actual, expectedUser);
+        assertEquals(actualUser.get(), expectedUser);
 
     }
 
@@ -62,13 +62,14 @@ public class UserJdbcDaoImplTest {
         User addedUser = new User(NEW_ID, DEFAULT_NAME, DEFAULT_AGE, DEFAULT_PET);
         userDao.insert(addedUser);
 
-        assertEquals(userDao.findById(NEW_ID), addedUser);
+        Optional<User> userFromDB = userDao.findById(NEW_ID);
+        assertTrue(userFromDB.isPresent());
 
-        userDao.delete(userDao.findById(NEW_ID));
+        userDao.delete(userFromDB.get());
 
-        if (userDao.findById(NEW_ID) != null) {
-            assertEquals(userDao.findById(NEW_ID), addedUser);
-        }
+        Optional<User> userAfterDeleteFromDB = userDao.findById(NEW_ID);
+        assertFalse(userAfterDeleteFromDB.isPresent());
+
 
     }
 
@@ -76,9 +77,11 @@ public class UserJdbcDaoImplTest {
     public void shouldHaveCorrectFindById() {
         User expectedUser = new User(NEW_ID, DEFAULT_NAME, DEFAULT_AGE, DEFAULT_PET);
         userDao.insert(expectedUser);
-        if (userDao.findById(NEW_ID) != null) {
-            assertEquals(userDao.findById(NEW_ID), expectedUser);
-        }
+
+        Optional<User> actualUser = userDao.findById(NEW_ID);
+        assertTrue(actualUser.isPresent());
+        assertEquals(actualUser.get(), expectedUser);
+
 
     }
 
@@ -86,7 +89,6 @@ public class UserJdbcDaoImplTest {
     public void shouldHaveCorrectFindAll() {
         List<User> userList = userDao.findAll();
         assertEquals(userDao.count(), userList.size());
-
 
     }
 }

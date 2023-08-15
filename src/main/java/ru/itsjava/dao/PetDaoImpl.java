@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,11 +26,12 @@ public class PetDaoImpl implements PetDao {
     }
 
     @Override
-    public Pet findByBreed(String breed) {
+    public Optional<Pet> findByBreed(String breed) {
         try {
-            return jdbc.queryForObject("select id, breed from pet where breed = :breed", new MapSqlParameterSource(Map.of("breed", breed)), new PetMapper());
+            Pet pet = jdbc.queryForObject("select id, breed from pet where breed = :breed", new MapSqlParameterSource(Map.of("breed", breed)), new PetMapper());
+            return Optional.of(pet);
         } catch (EmptyResultDataAccessException e) {
-            return null;
+            return Optional.empty();
         }
     }
 

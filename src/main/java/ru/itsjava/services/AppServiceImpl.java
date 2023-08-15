@@ -6,6 +6,7 @@ import ru.itsjava.domain.Pet;
 import ru.itsjava.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,9 +54,9 @@ public class AppServiceImpl implements AppService {
         System.out.println("Выберите животное");
         System.out.println(petService.findAll().toString());
         String breed = ioService.input();
-        Pet petBreed = petService.findByBreed(breed);
+        Optional<Pet> petBreed = petService.findByBreed(breed);
 
-        User user = new User(userName, age, petBreed);
+        User user = new User(userName, age, petBreed.get());
         userService.insert(user);
     }
 }

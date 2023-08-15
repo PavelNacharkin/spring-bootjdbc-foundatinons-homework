@@ -6,6 +6,7 @@ import ru.itsjava.dao.PetDao;
 import ru.itsjava.domain.Pet;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +19,7 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public Pet findByBreed(String breed) {
+    public Optional<Pet> findByBreed(String breed) {
         return petDao.findByBreed(breed);
     }
 

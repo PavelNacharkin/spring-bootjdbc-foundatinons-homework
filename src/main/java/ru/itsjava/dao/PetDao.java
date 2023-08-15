@@ -3,11 +3,12 @@ package ru.itsjava.dao;
 import ru.itsjava.domain.Pet;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PetDao {
 
     List<Pet> findAll();
 
-    Pet findByBreed(String breed);
+    Optional<Pet> findByBreed(String breed);
 
 }

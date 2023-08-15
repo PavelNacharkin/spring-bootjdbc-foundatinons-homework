@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -29,8 +30,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public long insert(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        Map<String, Object> params = Map.of("name", user.getName(), "age", user.getAge(), "pet_id", user.getPet().getId());
-        jdbc.update("insert into users(name, age, pet_id) values (:name, :age, :pet_id)", new MapSqlParameterSource(params), keyHolder);
+        Map<String, Object> params = Map.of("id",user.getId(),"name", user.getName(), "age", user.getAge(), "pet_id", user.getPet().getId());
+        jdbc.update("insert into users(id,name, age, pet_id) values (:id, :name, :age, :pet_id)", new MapSqlParameterSource(params), keyHolder);
         return keyHolder.getKey().longValue();
     }
 
@@ -50,14 +51,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findById(long id) {
+    public Optional<User> findById(long id) {
         Map<String, Object> params = Map.of("id", id);
         try {
-
-            return jdbc.queryForObject("select u.id as UID, name, age, p.id as PID, breed from users u, pet p where u.id = :id " +
+            User user = jdbc.queryForObject("select u.id as UID, name, age, p.id as PID, breed from users u, pet p where u.id = :id " +
                     "and u.pet_id = p.id", params, new UsersMapper());
+            return Optional.of(user);
         } catch (EmptyResultDataAccessException e) {
-            return null;
+            return Optional.empty();
         }
     }
 
