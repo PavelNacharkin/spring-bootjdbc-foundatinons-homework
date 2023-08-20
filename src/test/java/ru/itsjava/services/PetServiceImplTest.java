@@ -44,7 +44,7 @@ public class PetServiceImplTest {
     private PetService petService;
 
     @Test
-    void shouldHaveCorrectMethodFindByBreed() {
+    public void shouldHaveCorrectMethodFindByBreed() {
 
         Optional<Pet> actualPet = petService.findByBreed("Maine Coon");
 
@@ -53,7 +53,7 @@ public class PetServiceImplTest {
     }
 
     @Test
-    void shouldHaveCorrectMethodFindAll() {
+    public void shouldHaveCorrectMethodFindAll() {
 
         assertEquals(1, petService.findAll().size());
     }

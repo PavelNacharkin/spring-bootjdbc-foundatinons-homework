@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 
-
 @SpringBootTest
 public class AppServiceImplTest {
 
@@ -57,7 +56,7 @@ public class AppServiceImplTest {
     private AppService appService;
 
     @Test
-    void shouldHaveCorrectMethodPrintAllUsers() {
+    public  void shouldHaveCorrectMethodPrintAllUsers() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         appService.printAllUsers();
@@ -67,7 +66,7 @@ public class AppServiceImplTest {
     }
 
     @Test
-    void shouldHaveCorrectMethodInsertUser() {
+    public void shouldHaveCorrectMethodInsertUser() {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         appService.insertUser();
@@ -75,6 +74,6 @@ public class AppServiceImplTest {
         assertEquals("Введите Пользователя \r\n" +
                 "Введите Имя\r\n" +
                 "Введите возраст\r\n" +
-                "Выберите животное\r\n" + "[]\r\n"+ "Животное с указанной породой не найдено. Повторите попытку.\r\n", outputStream.toString());
+                "Выберите животное\r\n" + "[]\r\n" + "Животное с указанной породой не найдено. Повторите попытку.\r\n", outputStream.toString());
     }
 }

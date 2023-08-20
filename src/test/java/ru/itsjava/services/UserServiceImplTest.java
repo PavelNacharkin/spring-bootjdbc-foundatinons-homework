@@ -55,7 +55,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void shouldHaveCorrectMethodFindAll() {
+    public void shouldHaveCorrectMethodFindAll() {
 
         assertEquals(1, userService.findAll().size());
     }
